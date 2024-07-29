@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aviasales-App</title>
+  </head>
+  <body>
+    <div class="aviasales-app">
+      <div class="aviasales-app__content">
+        <div class="aviasales-app__filter filter">
+          <p class="filter__text">Количество пересадок</p>
+          <ul class="filter__list">
+            <li class="filter__list-item"><input type="checkbox" class="filter__checkbox" />Все</li>
+            <li class="filter__list-item">
+              <input type="checkbox" class="filter__checkbox" />Без пересадок
+            </li>
+            <li class="filter__list-item">
+              <input type="checkbox" class="filter__checkbox" />1 пересадка
+            </li>
+            <li class="filter__list-item">
+              <input type="checkbox" class="filter__checkbox" />2 пересадки
+            </li>
+            <li class="filter__list-item">
+              <input type="checkbox" class="filter__checkbox" />3 пересадки
+            </li>
+          </ul>
+        </div>
+        <div class="aviasales-app__tabs tabs">
+          <ul class="tabs__tickets">
+            <li class="tabs__tickets-ticket"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>
