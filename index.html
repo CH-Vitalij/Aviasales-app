@@ -9,39 +9,64 @@
     <div class="page__container">
       <section class="page__aviasales-app aviasales-app">
         <div class="aviasales-app__body">
-          <div class="aviasales-app__filter filter">
-            <p class="filter__text">Количество пересадок</p>
-            <ul class="filter__list">
-              <li class="filter__list-item">
-                <input type="checkbox" class="filter__checkbox" />Все
-              </li>
-              <li class="filter__list-item">
-                <input type="checkbox" class="filter__checkbox" />Без пересадок
-              </li>
-              <li class="filter__list-item">
-                <input type="checkbox" class="filter__checkbox" />1 пересадка
-              </li>
-              <li class="filter__list-item">
-                <input type="checkbox" class="filter__checkbox" />2 пересадки
-              </li>
-              <li class="filter__list-item">
-                <input type="checkbox" class="filter__checkbox" />3 пересадки
-              </li>
-            </ul>
+          <div class="aviasales-app__logo">
+            <img src="./src/img/Logo.svg" alt="aviasales-logo" />
           </div>
-          <div class="aviasales-app__container">
-            <ul class="aviasales-app__tabs tabs">
-              <li class="tabs__tab tabs__tab_left tabs__tab_active">САМЫЙ ДЕШЕВЫЙ</li>
-              <li class="tabs__tab">САМЫЙ БЫСТРЫЙ</li>
-              <li class="tabs__tab tabs__tab_right">ОПТИМАЛЬНЫЙ</li>
-            </ul>
-            <ul class="tabs__tickets">
-              <li class="tabs__tickets-ticket"></li>
-              <li class="tabs__tickets-ticket"></li>
-              <li class="tabs__tickets-ticket"></li>
-              <li class="tabs__tickets-ticket"></li>
-              <li class="tabs__tickets-ticket"></li>
-            </ul>
+          <div class="aviasales-app__container-1">
+            <div class="aviasales-app__filter filter">
+              <p class="filter__text">Количество пересадок</p>
+              <ul class="filter__list">
+                <li class="filter__list-item">
+                  <label class="filter__label"
+                    ><input type="checkbox" class="filter__checkbox" />Все</label
+                  >
+                </li>
+                <li class="filter__list-item">
+                  <label class="filter__label"
+                    ><input type="checkbox" class="filter__checkbox" />Без пересадок</label
+                  >
+                </li>
+                <li class="filter__list-item">
+                  <label class="filter__label"
+                    ><input type="checkbox" class="filter__checkbox" />1 пересадка</label
+                  >
+                </li>
+                <li class="filter__list-item">
+                  <label class="filter__label"
+                    ><input type="checkbox" class="filter__checkbox" />2 пересадки</label
+                  >
+                </li>
+                <li class="filter__list-item">
+                  <label class="filter__label"
+                    ><input type="checkbox" class="filter__checkbox" />3 пересадки</label
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="aviasales-app__container-2">
+              <ul class="aviasales-app__tabs tabs">
+                <li class="tabs__tab tabs__tab_left tabs__tab_active">САМЫЙ ДЕШЕВЫЙ</li>
+                <li class="tabs__tab">САМЫЙ БЫСТРЫЙ</li>
+                <li class="tabs__tab tabs__tab_right">ОПТИМАЛЬНЫЙ</li>
+              </ul>
+              <ul class="aviasales-app__tickets tickets">
+                <li class="tickets__ticket">
+                  <header class="tickets__ticket-header">
+                    <span class="tickets__ticket-header-price">13 400 Р</span>
+                    <div class="tickets__ticket-header-arline-logo">
+                      <img src="./src/img/S7 Logo.svg" alt="arline-logo" />
+                    </div>
+                  </header>
+                  <div class="tickets__ticket-route-info">
+                    <div class="tickets__ticket-route">
+                      <span class="">MOW – HKT</span><span>11:20 – 00:50</span>
+                    </div>
+                    <div class="tickets__ticket-length">В пути 13ч 30м</div>
+                    <div class="tickets__ticket-stops">1 пересадка HKG</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
