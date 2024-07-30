@@ -5,33 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aviasales-App</title>
   </head>
-  <body>
-    <div class="aviasales-app">
-      <div class="aviasales-app__content">
-        <div class="aviasales-app__filter filter">
-          <p class="filter__text">Количество пересадок</p>
-          <ul class="filter__list">
-            <li class="filter__list-item"><input type="checkbox" class="filter__checkbox" />Все</li>
-            <li class="filter__list-item">
-              <input type="checkbox" class="filter__checkbox" />Без пересадок
-            </li>
-            <li class="filter__list-item">
-              <input type="checkbox" class="filter__checkbox" />1 пересадка
-            </li>
-            <li class="filter__list-item">
-              <input type="checkbox" class="filter__checkbox" />2 пересадки
-            </li>
-            <li class="filter__list-item">
-              <input type="checkbox" class="filter__checkbox" />3 пересадки
-            </li>
-          </ul>
+  <body class="page">
+    <div class="page__container">
+      <section class="page__aviasales-app aviasales-app">
+        <div class="aviasales-app__body">
+          <div class="aviasales-app__filter filter">
+            <p class="filter__text">Количество пересадок</p>
+            <ul class="filter__list">
+              <li class="filter__list-item">
+                <input type="checkbox" class="filter__checkbox" />Все
+              </li>
+              <li class="filter__list-item">
+                <input type="checkbox" class="filter__checkbox" />Без пересадок
+              </li>
+              <li class="filter__list-item">
+                <input type="checkbox" class="filter__checkbox" />1 пересадка
+              </li>
+              <li class="filter__list-item">
+                <input type="checkbox" class="filter__checkbox" />2 пересадки
+              </li>
+              <li class="filter__list-item">
+                <input type="checkbox" class="filter__checkbox" />3 пересадки
+              </li>
+            </ul>
+          </div>
+          <div class="aviasales-app__container">
+            <ul class="aviasales-app__tabs tabs">
+              <li class="tabs__tab tabs__tab_left tabs__tab_active">САМЫЙ ДЕШЕВЫЙ</li>
+              <li class="tabs__tab">САМЫЙ БЫСТРЫЙ</li>
+              <li class="tabs__tab tabs__tab_right">ОПТИМАЛЬНЫЙ</li>
+            </ul>
+            <ul class="tabs__tickets">
+              <li class="tabs__tickets-ticket"></li>
+              <li class="tabs__tickets-ticket"></li>
+              <li class="tabs__tickets-ticket"></li>
+              <li class="tabs__tickets-ticket"></li>
+              <li class="tabs__tickets-ticket"></li>
+            </ul>
+          </div>
         </div>
-        <div class="aviasales-app__tabs tabs">
-          <ul class="tabs__tickets">
-            <li class="tabs__tickets-ticket"></li>
-          </ul>
-        </div>
-      </div>
+      </section>
     </div>
     <script type="module" src="/src/index.tsx"></script>
   </body>
