@@ -1,4 +1,4 @@
 @import "node_modules/normalize-scss/sass/normalize";
 @include normalize();
 
-@import "App.scss";
+@import "./components/App/App.scss";
