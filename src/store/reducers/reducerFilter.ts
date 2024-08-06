@@ -11,17 +11,32 @@ const initialState: FilterState = {
 };
 
 export const reducerFilter = (state = initialState, action: ActionType): FilterState => {
-  console.log("action", action);
-
   switch (action.type) {
     case FilterActionType.FILTER_CHECKED: {
       const { filters } = state;
+      const filterInd = filters.findIndex((filter) => filter.id === action.id);
 
-      return {
-        filters: filters.map((filter) =>
-          filter.id === action.id ? { ...filter, checked: !filter.checked } : filter,
-        ),
-      };
+      if (filterInd === -1) {
+        return state;
+      }
+
+      const newCheckedState = !filters[filterInd].checked;
+      const newFilters = filters.map((filter, index) => {
+        if (filterInd === 0) {
+          return { ...filter, checked: newCheckedState };
+        } else if (index === filterInd) {
+          return { ...filter, checked: newCheckedState };
+        } else if (index === 0) {
+          return { ...filter, checked: false };
+        }
+        return filter;
+      });
+
+      if (filterInd !== 0 && newFilters.slice(1).every((filter) => filter.checked)) {
+        newFilters[0].checked = true;
+      }
+
+      return { filters: newFilters };
     }
 
     default:

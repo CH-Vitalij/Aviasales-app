@@ -17,7 +17,7 @@ export interface ActionType {
   id: string;
 }
 
-export interface FilterTypes {
+export interface FilterPropTypes {
   text: string;
   id: string;
   checked: boolean;

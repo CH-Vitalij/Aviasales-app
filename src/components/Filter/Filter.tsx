@@ -1,8 +1,8 @@
-import { FilterTypes } from "../../types/filter";
+import { FilterPropTypes } from "../../types/filter";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { filter } from "../../store/action-creator/filter";
 
-const Filter = (props: FilterTypes) => {
+const Filter = (props: FilterPropTypes) => {
   const { text, checked, id } = props;
 
   const dispatch = useAppDispatch();
