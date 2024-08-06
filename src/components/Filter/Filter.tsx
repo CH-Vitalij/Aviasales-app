@@ -1,12 +1,25 @@
-interface PropTypes {
-  filter: string;
-}
+import { FilterTypes } from "../../types/filter";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { filter } from "../../store/action-creator/filter";
 
-const Filter = (props: PropTypes) => {
+const Filter = (props: FilterTypes) => {
+  const { text, checked, id } = props;
+
+  const dispatch = useAppDispatch();
+
+  const handleChange = () => {
+    dispatch(filter(id));
+  };
+
   return (
     <label className="filter__label">
-      <input type="checkbox" className="filter__checkbox" />
-      {props.filter}
+      <input
+        type="checkbox"
+        className="filter__checkbox"
+        onChange={handleChange}
+        checked={checked}
+      />
+      {text}
     </label>
   );
 };

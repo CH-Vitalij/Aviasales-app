@@ -1,23 +1,13 @@
+import { useAppSelector } from "../../hooks/useAppSelector";
 import Filter from "../Filter/Filter";
 
-interface FilterTypes {
-  text: string;
-  id: string;
-}
-
 const Filters = () => {
-  const filters: FilterTypes[] = [
-    { text: "Все", id: crypto.randomUUID() },
-    { text: "Без пересадок", id: crypto.randomUUID() },
-    { text: "1 пересадка", id: crypto.randomUUID() },
-    { text: "2 пересадки", id: crypto.randomUUID() },
-    { text: "3 пересадки", id: crypto.randomUUID() },
-  ];
+  const { filters } = useAppSelector((state) => state.filter);
 
   const elements = filters.map((filter) => {
     return (
       <li key={filter.id} className="filter__list-item">
-        <Filter filter={filter.text} />
+        <Filter {...filter} />
       </li>
     );
   });

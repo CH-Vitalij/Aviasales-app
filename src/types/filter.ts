@@ -1,11 +1,24 @@
-export interface FilterState {
+interface Filter {
+  text: string;
   checked: boolean;
+  id: string;
 }
 
-export enum FilterType {
+export interface FilterState {
+  filters: Filter[];
+}
+
+export enum FilterActionType {
   FILTER_CHECKED = "FILTER_CHECKED",
 }
 
 export interface ActionType {
-  type: FilterType;
+  type: FilterActionType;
+  id: string;
+}
+
+export interface FilterTypes {
+  text: string;
+  id: string;
+  checked: boolean;
 }
