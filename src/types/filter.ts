@@ -1,11 +1,5 @@
-interface Filter {
-  text: string;
-  checked: boolean;
-  id: string;
-}
-
 export interface FilterState {
-  filters: Filter[];
+  checkedFilters: string[];
 }
 
 export enum FilterActionType {
@@ -14,11 +8,5 @@ export enum FilterActionType {
 
 export interface ActionType {
   type: FilterActionType;
-  id: string;
-}
-
-export interface FilterPropTypes {
-  text: string;
-  id: string;
-  checked: boolean;
+  list: string[];
 }
