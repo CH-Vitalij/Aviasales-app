@@ -17,8 +17,6 @@ const Filters: React.FC = () => {
 
   const checkAll = filters.length === checkedFilters.length;
 
-  const indeterminate = checkedFilters.length > 0 && checkedFilters.length < filters.length;
-
   const onChange = (list: string[]) => {
     dispatch(filter(list));
   };
@@ -30,7 +28,7 @@ const Filters: React.FC = () => {
   return (
     <div className={`${classes.aviasalesAppFilter} ${classes.filter}`}>
       <p className={classes.filterText}>Количество пересадок</p>
-      <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
+      <Checkbox onChange={onCheckAllChange} checked={checkAll}>
         Все
       </Checkbox>
       <CheckboxGroup options={filters} value={checkedFilters} onChange={onChange} />
