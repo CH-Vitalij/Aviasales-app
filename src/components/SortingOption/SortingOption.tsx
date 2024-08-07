@@ -1,9 +1,13 @@
+import classes from "./SortingOption.module.scss";
+
 const SortingOption = () => {
   return (
     <>
-      <li className="tabs__tab tabs__tab_left tabs__tab_active">САМЫЙ ДЕШЕВЫЙ</li>
-      <li className="tabs__tab">САМЫЙ БЫСТРЫЙ</li>
-      <li className="tabs__tab tabs__tab_right">ОПТИМАЛЬНЫЙ</li>
+      <li className={`${classes.tabsTab} ${classes.tabsTabLeft} ${classes.tabsTabActive}`}>
+        САМЫЙ ДЕШЕВЫЙ
+      </li>
+      <li className={classes.tabsTab}>САМЫЙ БЫСТРЫЙ</li>
+      <li className={`${classes.tabsTab} ${classes.tabsTabRight}`}>ОПТИМАЛЬНЫЙ</li>
     </>
   );
 };

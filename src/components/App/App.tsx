@@ -3,18 +3,19 @@ import SortingOptions from "../SortingOptions";
 import Tickets from "../Tickets";
 import { store } from "../../store/index";
 import { Provider } from "react-redux";
+import classes from "./App.module.scss";
 
 const App = () => {
   return (
     <Provider store={store}>
-      <section className="page__aviasales-app aviasales-app">
-        <div className="aviasales-app__body">
-          <div className="aviasales-app__logo">
+      <section className={`${classes.pageAviasalesApp} ${classes.aviasalesApp}`}>
+        <div className={classes.aviasalesAppBody}>
+          <div className={classes.aviasalesAppLogo}>
             <img src="./src/img/Logo.svg" alt="aviasales-logo" />
           </div>
-          <div className="aviasales-app__container-1">
+          <div className={classes.aviasalesAppContainer1}>
             <Filters />
-            <div className="aviasales-app__container-2">
+            <div className={classes.aviasalesAppContainer2}>
               <SortingOptions />
               <Tickets />
             </div>

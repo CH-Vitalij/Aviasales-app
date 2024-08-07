@@ -1,20 +1,22 @@
+import classes from "./Tickets.module.scss";
+
 const Tickets = () => {
   return (
-    <ul className="aviasales-app__tickets tickets">
-      <li className="tickets__ticket">
-        <header className="tickets__ticket-header">
-          <span className="tickets__ticket-header-price">13 400 Р</span>
-          <div className="tickets__ticket-header-arline-logo">
+    <ul className={`${classes.aviasalesAppTickets} ${classes.tickets}`}>
+      <li className={classes.ticketsTicket}>
+        <header className={classes.ticketsTicketHeader}>
+          <span className={classes.ticketsTicketHeaderPrice}>13 400 Р</span>
+          <div className={classes.ticketsTicketHeaderArlineLogo}>
             <img src="./src/img/S7 Logo.svg" alt="arline-logo" />
           </div>
         </header>
-        <div className="tickets__ticket-route-info">
-          <div className="tickets__ticket-route">
+        <div className={classes.ticketsTicketRouteInfo}>
+          <div className={classes.ticketsTicketRoute}>
             <span className="">MOW – HKT</span>
             <span>11:20 – 00:50</span>
           </div>
-          <div className="tickets__ticket-length">В пути 13ч 30м</div>
-          <div className="tickets__ticket-stops">1 пересадка HKG</div>
+          <div className={classes.ticketsTicketDuration}>В пути 13ч 30м</div>
+          <div className={classes.ticketsTicketStops}>1 пересадка HKG</div>
         </div>
       </li>
     </ul>

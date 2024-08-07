@@ -1,6 +1,7 @@
 import { FilterPropTypes } from "../../types/filter";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { filter } from "../../store/action-creator/filter";
+import classes from "./Filter.module.scss";
 
 const Filter = (props: FilterPropTypes) => {
   const { text, checked, id } = props;
@@ -12,10 +13,10 @@ const Filter = (props: FilterPropTypes) => {
   };
 
   return (
-    <label className="filter__label">
+    <label className={classes.filterLabel}>
       <input
         type="checkbox"
-        className="filter__checkbox"
+        className={classes.filterCheckbox}
         onChange={handleChange}
         checked={checked}
       />
