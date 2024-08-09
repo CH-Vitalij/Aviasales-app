@@ -24,6 +24,8 @@ export default class AviasalesService {
     }
 
     const result = (await response.json()) as TicketsData;
+
+    result.tickets = result.tickets.slice(0, 5);
     return result;
   }
 }

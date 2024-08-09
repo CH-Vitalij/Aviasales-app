@@ -24,7 +24,7 @@ export const fetchTicketsData = () => {
       dispatch(fetchDataRequest());
       const result = await new AviasalesService().getTickets();
 
-      setTimeout(() => dispatch(fetchDataSuccess(result)), 1000);
+      dispatch(fetchDataSuccess(result));
     } catch (err) {
       dispatch(fetchDataERROR("Произошла ошибка при загрузке билетов"));
     }

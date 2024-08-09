@@ -1,0 +1,19 @@
+.aviasales-app {
+  &__tickets {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+.tickets {
+  &__ticket {
+    width: 502px;
+    height: 184px;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    box-shadow: 0px 2px 8px 0px rgba(#000000, 0.1);
+    border-radius: 5px;
+    padding: 20px;
+  }
+}
