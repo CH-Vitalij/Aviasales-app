@@ -6,7 +6,7 @@ export enum FilterActionType {
   FILTER_CHECKED = "FILTER_CHECKED",
 }
 
-export interface ActionType {
+export interface FilterActionTypeObj {
   type: FilterActionType;
   list: string[];
 }

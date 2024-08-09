@@ -1,6 +1,6 @@
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { filter } from "../../store/action-creator/filter";
+import { filterAction } from "../../store/actionCreators/filterAction";
 import classes from "./Filters.module.scss";
 import "./FilterAnt.scss";
 
@@ -18,11 +18,11 @@ const Filters: React.FC = () => {
   const checkAll = filters.length === checkedFilters.length;
 
   const onChange = (list: string[]) => {
-    dispatch(filter(list));
+    dispatch(filterAction(list));
   };
 
   const onCheckAllChange: CheckboxProps["onChange"] = (e) => {
-    dispatch(filter(e.target.checked ? filters : []));
+    dispatch(filterAction(e.target.checked ? filters : []));
   };
 
   return (

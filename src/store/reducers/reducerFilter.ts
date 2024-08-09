@@ -1,10 +1,10 @@
-import { FilterState, ActionType, FilterActionType } from "../../types/filter";
+import { FilterState, FilterActionTypeObj, FilterActionType } from "../../types/filterTypes";
 
 const initialState: FilterState = {
   checkedFilters: [],
 };
 
-export const reducerFilter = (state = initialState, action: ActionType): FilterState => {
+export const reducerFilter = (state = initialState, action: FilterActionTypeObj): FilterState => {
   switch (action.type) {
     case FilterActionType.FILTER_CHECKED: {
       return { checkedFilters: action.list };
