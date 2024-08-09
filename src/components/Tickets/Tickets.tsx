@@ -1,6 +1,26 @@
+import { useEffect } from "react";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { useTickets } from "../../hooks/useTickets";
+import { Spin } from "antd";
+
 import classes from "./Tickets.module.scss";
 
 const Tickets = () => {
+  const { loading, data, error } = useAppSelector((state) => state.ticketsData);
+  const { fetchTicketsData } = useTickets();
+
+  useEffect(() => {
+    fetchTicketsData();
+  }, []);
+
+  if (loading) {
+    return <Spin size="large" />;
+  }
+
+  if (error) {
+    return <h1>Произошла Ошибка</h1>;
+  }
+
   return (
     <ul className={`${classes.aviasalesAppTickets} ${classes.tickets}`}>
       <li className={classes.ticketsTicket}>

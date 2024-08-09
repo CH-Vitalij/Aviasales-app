@@ -1,8 +1,10 @@
+import { Provider } from "react-redux";
+import { store } from "../../store/index";
+
 import Filters from "../Filters";
 import SortingOptions from "../SortingOptions";
 import Tickets from "../Tickets";
-import { store } from "../../store/index";
-import { Provider } from "react-redux";
+
 import classes from "./App.module.scss";
 
 const App = () => {

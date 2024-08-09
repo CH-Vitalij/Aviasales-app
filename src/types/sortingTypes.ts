@@ -6,6 +6,6 @@ export enum SortingActionType {
   VALUE = "VALUE",
 }
 
-export interface SortingActionTypeObj {
+export interface SortingAction {
   type: SortingActionType;
 }
