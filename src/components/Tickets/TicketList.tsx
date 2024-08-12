@@ -1,17 +1,21 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useTickets } from "../../hooks/useTickets";
 import { Flex, Spin } from "antd";
 
 import classes from "./TicketList.module.scss";
 import Ticket from "../Ticket";
+import { CustomContext } from "../App";
 
 const Tickets = () => {
   const { loading, data, error } = useAppSelector((state) => state.ticketsData);
   const { fetchTicketsData } = useTickets();
+  const searchId = useContext(CustomContext) as string;
+
+  console.log(searchId);
 
   useEffect(() => {
-    fetchTicketsData();
+    fetchTicketsData(searchId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -31,9 +35,11 @@ const Tickets = () => {
     return <h1>Данные не загружены</h1>;
   }
 
-  const ticketItems = data.tickets.map((ticket) => {
+  console.log("Tickets data:", data.tickets);
+
+  const ticketItems = data.tickets.slice(0, 5).map((ticket) => {
     return (
-      <li key={ticket.price} className={classes.ticketsTicket}>
+      <li key={ticket.id} className={classes.ticketsTicket}>
         <Ticket {...ticket} stop={data.stop} />
       </li>
     );

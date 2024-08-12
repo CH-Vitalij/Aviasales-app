@@ -2,7 +2,7 @@ export interface SearchRequest {
   searchId: string;
 }
 
-export interface Segment {
+interface Segment {
   origin: string;
   destination: string;
   date: string;
@@ -10,7 +10,8 @@ export interface Segment {
   duration: number;
 }
 
-interface Ticket {
+export interface Ticket {
+  id: string;
   price: number;
   carrier: string;
   segments: Segment[];

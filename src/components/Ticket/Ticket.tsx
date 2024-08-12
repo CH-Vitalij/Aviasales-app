@@ -2,9 +2,8 @@ import classes from "./Ticket.module.scss";
 import { addMinutes, format, intervalToDuration, parseISO } from "date-fns";
 
 import { TicketDataProps } from "../../types/aviasalesDataTypes";
-import { Segment } from "../../types/aviasalesDataTypes";
 
-const calculateFlightTimes = (segment: Segment) => {
+const calculateFlightTimes = <T extends { duration: number; date: string }>(segment: T) => {
   const flightDuration = intervalToDuration({ start: 0, end: segment.duration * 60 * 1000 });
   const departureDate = parseISO(segment.date);
 
@@ -19,8 +18,6 @@ const calculateFlightTimes = (segment: Segment) => {
 };
 
 const Ticket = (props: TicketDataProps) => {
-  console.log(props);
-
   const flights = props.segments.map((segment) => {
     const { departureTime, arrivalTime, flightDuration } = calculateFlightTimes(segment);
 
@@ -61,7 +58,9 @@ const Ticket = (props: TicketDataProps) => {
   return (
     <>
       <header className={classes.ticketsTicketHeader}>
-        <span className={classes.ticketsTicketHeaderPrice}>{props.price} Р</span>
+        <span className={classes.ticketsTicketHeaderPrice}>
+          {new Intl.NumberFormat("ru").format(props.price)} Р
+        </span>
         <div className={classes.ticketsTicketHeaderArlineLogo}>
           <img src={`http://pics.avs.io/110/36/${props.carrier}.png.`} alt="arline-logo" />
         </div>

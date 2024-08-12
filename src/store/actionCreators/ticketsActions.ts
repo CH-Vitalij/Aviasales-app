@@ -18,14 +18,18 @@ const fetchDataERROR = (error: string): TicketsAction => ({
   payload: error,
 });
 
-export const fetchTicketsData = () => {
+export const fetchTicketsData = (searchId : string) => {
   return async (dispatch: Dispatch<TicketsAction>) => {
     try {
       dispatch(fetchDataRequest());
-      const result = await new AviasalesService().getTickets();
+      const result = await new AviasalesService().getTickets(searchId);
+
+      console.log(result);
 
       dispatch(fetchDataSuccess(result));
     } catch (err) {
+      console.log(err);
+
       dispatch(fetchDataERROR("Произошла ошибка при загрузке билетов"));
     }
   };

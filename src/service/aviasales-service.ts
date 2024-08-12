@@ -1,4 +1,4 @@
-import { SearchRequest, TicketsData } from "../types/aviasalesDataTypes";
+import { SearchRequest, TicketsData, Ticket } from "../types/aviasalesDataTypes";
 
 export default class AviasalesService {
   async getSearchId() {
@@ -9,12 +9,12 @@ export default class AviasalesService {
     }
 
     const result = (await response.json()) as SearchRequest;
+    console.log(result);
+
     return result.searchId;
   }
 
-  async getTickets() {
-    const searchId = await this.getSearchId();
-
+  async getTickets(searchId) {
     const response = await fetch(
       `https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`,
     );
@@ -25,7 +25,16 @@ export default class AviasalesService {
 
     const result = (await response.json()) as TicketsData;
 
-    result.tickets = result.tickets.slice(0, 5);
+    result.tickets = this.transformDataAddId(result.tickets);
+
     return result;
   }
+
+  transformDataAddId = (data: Ticket[]) => {
+    const newData = JSON.parse(JSON.stringify(data)) as Ticket[];
+
+    newData.forEach((ticket: Ticket) => (ticket.id = crypto.randomUUID()));
+
+    return newData;
+  };
 }

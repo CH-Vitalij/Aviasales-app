@@ -31,4 +31,26 @@
     gap: 20px;
     width: 502px;
   }
+
+  &__btn {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #2196f3;
+    color: #ffffff;
+    border-radius: 5px;
+    width: inherit;
+    height: 50px;
+    border: none;
+    cursor: url("../../img/Cursor.png") 5 0, pointer;
+
+    &:focus-visible {
+      outline: 5px solid #95c9f9;
+      outline-offset: 1px;
+    }
+  }
 }
