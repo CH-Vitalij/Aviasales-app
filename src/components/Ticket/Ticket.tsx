@@ -1,9 +1,62 @@
 import classes from "./Ticket.module.scss";
+import { addMinutes, format, intervalToDuration, parseISO } from "date-fns";
 
 import { TicketDataProps } from "../../types/aviasalesDataTypes";
+import { Segment } from "../../types/aviasalesDataTypes";
+
+const calculateFlightTimes = (segment: Segment) => {
+  const flightDuration = intervalToDuration({ start: 0, end: segment.duration * 60 * 1000 });
+  const departureDate = parseISO(segment.date);
+
+  const departureTime = format(departureDate, "HH:mm");
+  const arrivalTime = format(addMinutes(departureDate, segment.duration), "HH:mm");
+
+  return {
+    departureTime,
+    arrivalTime,
+    flightDuration,
+  };
+};
 
 const Ticket = (props: TicketDataProps) => {
   console.log(props);
+
+  const flights = props.segments.map((segment) => {
+    const { departureTime, arrivalTime, flightDuration } = calculateFlightTimes(segment);
+
+    return (
+      <div key={segment.date} className={classes.ticketsTicketFlightsInfo}>
+        <div className={classes.ticketsTicketRoute}>
+          <span
+            className={classes.ticketsTicketRouteItem1}
+          >{`${segment.origin} - ${segment.destination}`}</span>
+          <span
+            className={classes.ticketsTicketRouteItem2}
+          >{`${departureTime} - ${arrivalTime}`}</span>
+        </div>
+        <div className={classes.ticketsTicketDuration}>
+          <span className={classes.ticketsTicketDurationItem1}>В ПУТИ</span>
+          <span className={classes.ticketsTicketDurationItem2}>{`${
+            flightDuration.hours !== undefined ? flightDuration.hours : 0
+          }ч ${flightDuration.minutes !== undefined ? flightDuration.minutes : 0}м`}</span>
+        </div>
+        <div className={classes.ticketsTicketStops}>
+          <span className={classes.ticketsTicketStopsItem1}>
+            {`${segment.stops.length} ${
+              segment.stops.length === 1
+                ? "ПЕРЕСАДКА"
+                : segment.stops.length > 1
+                ? "ПЕРЕСАДКИ"
+                : "ПЕРЕСАДОК"
+            }`}
+          </span>
+          <span className={classes.ticketsTicketStopsItem2}>
+            {segment.stops.length > 0 ? segment.stops.join(", ") : "—"}
+          </span>
+        </div>
+      </div>
+    );
+  });
 
   return (
     <>
@@ -13,46 +66,7 @@ const Ticket = (props: TicketDataProps) => {
           <img src={`http://pics.avs.io/110/36/${props.carrier}.png.`} alt="arline-logo" />
         </div>
       </header>
-      <div className={classes.ticketsTicketSegmentsInfo}>
-        <div className={classes.ticketsTicketRoute}>
-          <span
-            className={classes.ticketsTicketRouteItem1}
-          >{`${props.segments[0].origin} - ${props.segments[0].destination}`}</span>
-          <span className={classes.ticketsTicketRouteItem2}>11:20 – 00:50</span>
-        </div>
-        <div className={classes.ticketsTicketDuration}>
-          <span className={classes.ticketsTicketDurationItem1}>В ПУТИ</span>
-          <span className={classes.ticketsTicketDurationItem2}>13ч 30м</span>
-        </div>
-        <div className={classes.ticketsTicketStops}>
-          <span
-            className={classes.ticketsTicketStopsItem1}
-          >{`${props.segments[0].stops.length} ПЕРЕСАДКА`}</span>
-          <span className={classes.ticketsTicketStopsItem2}>
-            {props.segments[0].stops.join(", ")}
-          </span>
-        </div>
-      </div>
-      <div className={classes.ticketsTicketSegmentsInfo}>
-        <div className={classes.ticketsTicketRoute}>
-          <span
-            className={classes.ticketsTicketRouteItem1}
-          >{`${props.segments[1].origin} - ${props.segments[1].destination}`}</span>
-          <span className={classes.ticketsTicketRouteItem2}>11:20 – 00:50</span>
-        </div>
-        <div className={classes.ticketsTicketDuration}>
-          <span className={classes.ticketsTicketDurationItem1}>В ПУТИ</span>
-          <span className={classes.ticketsTicketDurationItem2}>13ч 30м</span>
-        </div>
-        <div className={classes.ticketsTicketStops}>
-          <span
-            className={classes.ticketsTicketStopsItem1}
-          >{`${props.segments[1].stops.length} ПЕРЕСАДКА`}</span>
-          <span className={classes.ticketsTicketStopsItem2}>
-            {props.segments[1].stops.join(", ")}
-          </span>
-        </div>
-      </div>
+      {flights}
     </>
   );
 };

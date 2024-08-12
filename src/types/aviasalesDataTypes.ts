@@ -2,7 +2,7 @@ export interface SearchRequest {
   searchId: string;
 }
 
-interface Segment {
+export interface Segment {
   origin: string;
   destination: string;
   date: string;
