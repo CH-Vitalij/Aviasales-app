@@ -20,8 +20,6 @@ export default class AviasalesService {
 
     if (!response.ok) {
       if (response.status === 500) {
-        console.log("response.ok");
-
         throw new Error(`${response.status}`);
       }
       throw new Error(`Could not fetch, received ${response.status}`);
