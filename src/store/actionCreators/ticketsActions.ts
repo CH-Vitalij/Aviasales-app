@@ -18,18 +18,74 @@ const fetchDataERROR = (error: string): TicketsAction => ({
   payload: error,
 });
 
-export const fetchTicketsData = (searchId : string) => {
-  return async (dispatch: Dispatch<TicketsAction>) => {
+const fetchSearchId = async (obj: AviasalesService) => {
+  console.log(obj);
+  return await obj.getSearchId();
+};
+
+const successiveRequests = async (result, fullRes, obj, searchId, dispatch) => {
+  console.log("successiveRequests");
+
+  while (!result.stop) {
+    console.log("true");
+
+    try {
+      result = await obj.getTickets(searchId);
+      fullRes.tickets.push(...result.tickets);
+    } catch (err) {
+      console.log(err);
+      if (err.message === "500") {
+        console.log("Ошибка 500");
+        continue;
+      } else {
+        throw err;
+      }
+    }
+
+    console.log(fullRes);
+  }
+
+  dispatch(fetchDataSuccess(fullRes));
+};
+
+export const fetchTicketsData = () => {
+  const obj = new AviasalesService();
+
+  let executed = false;
+  let searchId = "";
+  let fullRes = { tickets: [], stop: false };
+  let result = null;
+
+  return async function handleData(dispatch: Dispatch<TicketsAction>) {
     try {
       dispatch(fetchDataRequest());
-      const result = await new AviasalesService().getTickets(searchId);
+
+      if (!executed) {
+        searchId = await fetchSearchId(obj);
+        executed = true;
+      }
+
+      try {
+        result = await obj.getTickets(searchId);
+        fullRes.tickets.push(...result.tickets);
+      } catch (err) {
+        console.log(err);
+        if (err.message === "500") {
+          console.log("Ошибка 500");
+          successiveRequests(result, fullRes, obj, searchId, dispatch);
+          return;
+        } else {
+          throw err;
+        }
+      }
 
       console.log(result);
+
+      successiveRequests(result, fullRes, obj, searchId, dispatch);
 
       dispatch(fetchDataSuccess(result));
     } catch (err) {
       console.log(err);
-
       dispatch(fetchDataERROR("Произошла ошибка при загрузке билетов"));
     }
   };

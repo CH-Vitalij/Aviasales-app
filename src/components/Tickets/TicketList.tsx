@@ -1,21 +1,17 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useTickets } from "../../hooks/useTickets";
 import { Flex, Spin } from "antd";
 
 import classes from "./TicketList.module.scss";
 import Ticket from "../Ticket";
-import { CustomContext } from "../App";
 
 const Tickets = () => {
   const { loading, data, error } = useAppSelector((state) => state.ticketsData);
   const { fetchTicketsData } = useTickets();
-  const searchId = useContext(CustomContext) as string;
-
-  console.log(searchId);
 
   useEffect(() => {
-    fetchTicketsData(searchId);
+    fetchTicketsData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -28,7 +24,7 @@ const Tickets = () => {
   }
 
   if (error) {
-    return <h1>Произошла Ошибка</h1>;
+    return <h1>{error}</h1>;
   }
 
   if (!data || !("tickets" in data)) {

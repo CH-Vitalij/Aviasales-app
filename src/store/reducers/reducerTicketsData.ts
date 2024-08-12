@@ -7,6 +7,8 @@ const initialState: TicketsState = {
 };
 
 export const reducerTicketsData = (state = initialState, action: TicketsAction) => {
+  console.log(action);
+
   switch (action.type) {
     case TicketsActionType.FETCH_TICKETS_REQUEST:
       return {
