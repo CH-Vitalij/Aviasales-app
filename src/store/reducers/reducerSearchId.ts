@@ -1,7 +1,7 @@
 import { SearchIdState, SearchIdActionType, SearchIdAction } from "../../types/searchIdTypes";
 
 const initialState = {
-  searchId: null,
+  searchId: '',
   loading: true,
   error: null,
 };
@@ -12,7 +12,7 @@ export const reducerSearchId = (state = initialState, action: SearchIdAction): S
       return { searchId: action.payload, loading: false, error: null };
 
     case SearchIdActionType.FETCH_SEARCH_ID_ERROR:
-      return { searchId: null, loading: false, error: action.payload };
+      return { searchId: '', loading: false, error: action.payload };
 
     default:
       return state;

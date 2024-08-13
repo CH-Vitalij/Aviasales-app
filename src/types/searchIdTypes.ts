@@ -1,5 +1,5 @@
 export interface SearchIdState {
-  searchId: null | string;
+  searchId: string;
   loading: boolean;
   error: null | string;
 }

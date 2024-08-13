@@ -13,16 +13,16 @@ const Tickets = () => {
 
   const { fetchTicketsData } = useTickets();
 
-  const fn = useCallback(
-    (searchId: null | string) => fetchTicketsData(searchId),
+  const fetchTickets = useCallback(
+    (searchId: string) => fetchTicketsData(searchId),
     [fetchTicketsData],
   );
 
   useEffect(() => {
     if (checkedFilters.length === 4) {
-      fn(searchId);
+      fetchTickets(searchId);
     }
-  }, [fn, searchId, checkedFilters]);
+  }, [fetchTickets, searchId, checkedFilters]);
 
   console.log(checkedFilters);
 

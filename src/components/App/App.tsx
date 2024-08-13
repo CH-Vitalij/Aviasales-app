@@ -12,13 +12,11 @@ const App = () => {
   const { loading, error } = useAppSelector((state) => state.searchId);
   const { fetchSearchIdData } = useSearchId();
 
-  const fn = useCallback(() => fetchSearchIdData(), [fetchSearchIdData]);
+  const fetchSearchId = useCallback(() => fetchSearchIdData(), [fetchSearchIdData]);
 
   useEffect(() => {
-    fn();
-  }, [fn]);
-
-  console.log(loading);
+    fetchSearchId();
+  }, [fetchSearchId]);
 
   if (loading) {
     return (

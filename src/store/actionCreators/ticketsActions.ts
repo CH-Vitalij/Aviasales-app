@@ -18,7 +18,13 @@ const fetchDataERROR = (error: string): TicketsAction => ({
   payload: error,
 });
 
-const successiveRequests = async (result, fullRes, obj, searchId, dispatch) => {
+const successiveRequests = async (
+  result: TicketsData,
+  fullRes: TicketsData,
+  obj: AviasalesService,
+  searchId: string,
+  dispatch: Dispatch<TicketsAction>,
+) => {
   console.log("successiveRequests");
 
   while (!result.stop) {
@@ -27,11 +33,13 @@ const successiveRequests = async (result, fullRes, obj, searchId, dispatch) => {
       fullRes.tickets.push(...result.tickets);
     } catch (err) {
       console.log(err);
-      if (err.message === "500") {
-        console.log("Ошибка 500");
-        continue;
-      } else {
-        throw err;
+      if (err instanceof Error) {
+        if (err.message === "500") {
+          console.log("Ошибка 500");
+          continue;
+        } else {
+          throw err;
+        }
       }
     }
 
@@ -41,11 +49,11 @@ const successiveRequests = async (result, fullRes, obj, searchId, dispatch) => {
   dispatch(fetchDataSuccess(fullRes));
 };
 
-export const fetchTicketsData = (searchId) => {
+export const fetchTicketsData = (searchId: string) => {
   const obj = new AviasalesService();
 
-  const fullRes = { tickets: [], stop: false };
-  let result = null;
+  const fullRes: TicketsData = { tickets: [], stop: false };
+  let result: TicketsData = { tickets: [], stop: false };
 
   return async function handleData(dispatch: Dispatch<TicketsAction>) {
     try {
@@ -53,15 +61,18 @@ export const fetchTicketsData = (searchId) => {
 
       try {
         result = await obj.getTickets(searchId);
+
         fullRes.tickets.push(...result.tickets);
       } catch (err) {
         console.log(err);
-        if (err.message === "500") {
-          console.log("Ошибка 500");
-          result = await obj.getTickets(searchId);
-          fullRes.tickets.push(...result.tickets);
-        } else {
-          throw err;
+        if (err instanceof Error) {
+          if (err.message === "500") {
+            console.log("Ошибка 500");
+            result = await obj.getTickets(searchId);
+            fullRes.tickets.push(...result.tickets);
+          } else {
+            throw err;
+          }
         }
       }
 
