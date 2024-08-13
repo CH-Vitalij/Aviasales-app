@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useTickets } from "../../hooks/useTickets";
 import { Flex, Spin } from "antd";
@@ -6,7 +6,7 @@ import { Flex, Spin } from "antd";
 import classes from "./TicketList.module.scss";
 import Ticket from "../Ticket";
 
-const Tickets = () => {
+const TicketsList = () => {
   const { data, error, loading } = useAppSelector((state) => state.ticketsData);
   const { checkedFilters } = useAppSelector((state) => state.filter);
   const { searchId } = useAppSelector((state) => state.searchId);
@@ -18,13 +18,18 @@ const Tickets = () => {
     [fetchTicketsData],
   );
 
+  const isLoading = useRef(false);
+
   useEffect(() => {
-    if (checkedFilters.length === 4) {
+    console.log("Effect");
+
+    if (!isLoading.current && searchId) {
+      isLoading.current = true;
       fetchTickets(searchId);
     }
-  }, [fetchTickets, searchId, checkedFilters]);
+  }, [fetchTickets, searchId]);
 
-  console.log(checkedFilters);
+  console.log("checkedFilters", checkedFilters);
 
   if (loading) {
     return (
@@ -58,7 +63,12 @@ const Tickets = () => {
     );
   });
 
-  return <ul className={`${classes.aviasalesAppTickets} ${classes.tickets}`}>{ticketItems}</ul>;
+  return (
+    <>
+      {!data.stop ? <h1>Ищем билеты...</h1> : null}
+      <ul className={`${classes.aviasalesAppTickets} ${classes.tickets}`}>{ticketItems}</ul>
+    </>
+  );
 };
 
-export default Tickets;
+export default TicketsList;

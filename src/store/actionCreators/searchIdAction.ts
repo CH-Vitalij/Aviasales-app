@@ -12,13 +12,16 @@ const fetchDataError = (error: string): SearchIdAction => ({
   payload: error,
 });
 
-export const fetchSearchIdData = () => {
+export const fetchSearchIdData = (ignore: boolean) => {
   return async (dispatch: Dispatch<SearchIdAction>) => {
     try {
       const obj = new AviasalesService();
 
       const searchId = await obj.getSearchId();
-      dispatch(fetchDataSuccess(searchId));
+
+      if (!ignore) {
+        dispatch(fetchDataSuccess(searchId));
+      }
     } catch (err) {
       dispatch(fetchDataError("Произошла ошибка во время получения идентификатора поиска"));
     }

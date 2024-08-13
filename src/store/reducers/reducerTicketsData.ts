@@ -10,24 +10,27 @@ export const reducerTicketsData = (state = initialState, action: TicketsAction) 
   console.log(action);
 
   switch (action.type) {
-    case TicketsActionType.FETCH_TICKETS_REQUEST:
+    case TicketsActionType.FETCH_TICKETS_REQUEST: {
       return {
         loading: true,
         data: {},
         error: null,
       };
-    case TicketsActionType.FETCH_TICKETS_SUCCESS:
+    }
+    case TicketsActionType.FETCH_TICKETS_SUCCESS: {
       return {
         loading: false,
         data: action.payload,
         error: null,
       };
-    case TicketsActionType.FETCH_TICKETS_ERROR:
+    }
+    case TicketsActionType.FETCH_TICKETS_ERROR: {
       return {
         loading: false,
         data: [],
         error: action.payload,
       };
+    }
 
     default:
       return state;

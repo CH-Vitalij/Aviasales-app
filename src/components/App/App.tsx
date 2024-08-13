@@ -1,9 +1,9 @@
 import Filters from "../Filters";
 import SortingOptions from "../SortingOptions";
-import Tickets from "../Tickets";
+import TicketsList from "../Tickets";
 
 import classes from "./App.module.scss";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useSearchId } from "../../hooks/useSearchId";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { Flex, Spin } from "antd";
@@ -12,10 +12,23 @@ const App = () => {
   const { loading, error } = useAppSelector((state) => state.searchId);
   const { fetchSearchIdData } = useSearchId();
 
-  const fetchSearchId = useCallback(() => fetchSearchIdData(), [fetchSearchIdData]);
+  const fetchSearchId = useCallback(
+    (ignore: boolean) => fetchSearchIdData(ignore),
+    [fetchSearchIdData],
+  );
+
+  const ignore = useRef(false);
 
   useEffect(() => {
-    fetchSearchId();
+    console.log("Effect S");
+
+    fetchSearchId(ignore.current);
+
+    return () => {
+      console.log('clean S');
+      
+      ignore.current = true;
+    };
   }, [fetchSearchId]);
 
   if (loading) {
@@ -40,7 +53,7 @@ const App = () => {
           <Filters />
           <div className={classes.aviasalesAppContainer2}>
             <SortingOptions />
-            <Tickets />
+            <TicketsList />
             <button className={classes.aviasalesAppBtn}>ПОКАЗАТЬ ЕЩЁ 5 БИЛЕТОВ!</button>
           </div>
         </div>

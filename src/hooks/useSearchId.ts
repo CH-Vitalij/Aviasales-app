@@ -7,7 +7,6 @@ export const useSearchId = () => {
   const dispatch = useDispatch();
 
   const res = useMemo(() => bindActionCreators(SearchIdDataActionCreators, dispatch), [dispatch]);
-  console.log(res);
 
   return res;
 };

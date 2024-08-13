@@ -6,7 +6,6 @@ import * as TicketsDataActionCreators from "../store/actionCreators/ticketsActio
 export const useTickets = () => {
   const dispatch = useDispatch();
   const res = useMemo(() => bindActionCreators(TicketsDataActionCreators, dispatch), [dispatch]);
-  console.log(res);
 
   return res;
 };
