@@ -18,10 +18,6 @@ const fetchDataERROR = (error: string): TicketsAction => ({
   payload: error,
 });
 
-const fetchSearchId = async (obj: AviasalesService) => {
-  return await obj.getSearchId();
-};
-
 const successiveRequests = async (result, fullRes, obj, searchId, dispatch) => {
   console.log("successiveRequests");
 
@@ -45,22 +41,15 @@ const successiveRequests = async (result, fullRes, obj, searchId, dispatch) => {
   dispatch(fetchDataSuccess(fullRes));
 };
 
-export const fetchTicketsData = () => {
+export const fetchTicketsData = (searchId) => {
   const obj = new AviasalesService();
 
-  let executed = false;
-  let searchId = "";
   const fullRes = { tickets: [], stop: false };
   let result = null;
 
   return async function handleData(dispatch: Dispatch<TicketsAction>) {
     try {
       dispatch(fetchDataRequest());
-
-      if (!executed) {
-        searchId = await fetchSearchId(obj);
-        executed = true;
-      }
 
       try {
         result = await obj.getTickets(searchId);

@@ -1,46 +1,53 @@
-import { Provider } from "react-redux";
-import { store } from "../../store/index";
-
 import Filters from "../Filters";
 import SortingOptions from "../SortingOptions";
 import Tickets from "../Tickets";
 
 import classes from "./App.module.scss";
-// import { createContext, FC, useEffect, useState } from "react";
-// import AviasalesService from "../../service/aviasales-service";
-
-// const CustomContext = createContext();
-
-// const SearchId: FC = ({ children }) => {
-//   const [searchId, setSearchId] = useState(null);
-
-//   useEffect(() => {
-//     const obj = new AviasalesService();
-//     obj.getSearchId().then((id) => setSearchId(id));
-//   }, []);
-
-//   return <CustomContext.Provider value={searchId}>{children}</CustomContext.Provider>;
-// };
+import { useCallback, useEffect } from "react";
+import { useSearchId } from "../../hooks/useSearchId";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { Flex, Spin } from "antd";
 
 const App = () => {
+  const { loading, error } = useAppSelector((state) => state.searchId);
+  const { fetchSearchIdData } = useSearchId();
+
+  const fn = useCallback(() => fetchSearchIdData(), [fetchSearchIdData]);
+
+  useEffect(() => {
+    fn();
+  }, [fn]);
+
+  console.log(loading);
+
+  if (loading) {
+    return (
+      <Flex justify="center" align="center">
+        <Spin size="large" />
+      </Flex>
+    );
+  }
+
+  if (error) {
+    return <h1>{error}</h1>;
+  }
+
   return (
-    <Provider store={store}>
-      <section className={`${classes.pageAviasalesApp} ${classes.aviasalesApp}`}>
-        <div className={classes.aviasalesAppBody}>
-          <div className={classes.aviasalesAppLogo}>
-            <img src="./src/img/Logo.svg" alt="aviasales-logo" />
-          </div>
-          <div className={classes.aviasalesAppContainer1}>
-            <Filters />
-            <div className={classes.aviasalesAppContainer2}>
-              <SortingOptions />
-              <Tickets />
-              <button className={classes.aviasalesAppBtn}>ПОКАЗАТЬ ЕЩЁ 5 БИЛЕТОВ!</button>
-            </div>
+    <section className={`${classes.pageAviasalesApp} ${classes.aviasalesApp}`}>
+      <div className={classes.aviasalesAppBody}>
+        <div className={classes.aviasalesAppLogo}>
+          <img src="./src/img/Logo.svg" alt="aviasales-logo" />
+        </div>
+        <div className={classes.aviasalesAppContainer1}>
+          <Filters />
+          <div className={classes.aviasalesAppContainer2}>
+            <SortingOptions />
+            <Tickets />
+            <button className={classes.aviasalesAppBtn}>ПОКАЗАТЬ ЕЩЁ 5 БИЛЕТОВ!</button>
           </div>
         </div>
-      </section>
-    </Provider>
+      </div>
+    </section>
   );
 };
 

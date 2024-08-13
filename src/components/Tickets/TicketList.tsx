@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useTickets } from "../../hooks/useTickets";
 import { Flex, Spin } from "antd";
@@ -7,13 +7,24 @@ import classes from "./TicketList.module.scss";
 import Ticket from "../Ticket";
 
 const Tickets = () => {
-  const { loading, data, error } = useAppSelector((state) => state.ticketsData);
+  const { data, error, loading } = useAppSelector((state) => state.ticketsData);
+  const { checkedFilters } = useAppSelector((state) => state.filter);
+  const { searchId } = useAppSelector((state) => state.searchId);
+
   const { fetchTicketsData } = useTickets();
 
+  const fn = useCallback(
+    (searchId: null | string) => fetchTicketsData(searchId),
+    [fetchTicketsData],
+  );
+
   useEffect(() => {
-    fetchTicketsData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (checkedFilters.length === 4) {
+      fn(searchId);
+    }
+  }, [fn, searchId, checkedFilters]);
+
+  console.log(checkedFilters);
 
   if (loading) {
     return (
@@ -31,12 +42,18 @@ const Tickets = () => {
     return <h1>Данные не загружены</h1>;
   }
 
+  if (checkedFilters.length === 0 || data.tickets.length === 0) {
+    return <h1>Рейсов, подходящих под заданные фильтры, не найдено</h1>;
+  }
+
+  // const hasData = !(loading || error);
+
   console.log("Tickets data:", data.tickets);
 
   const ticketItems = data.tickets.slice(0, 5).map((ticket) => {
     return (
       <li key={ticket.id} className={classes.ticketsTicket}>
-        <Ticket {...ticket} stop={data.stop} />
+        <Ticket {...ticket} />
       </li>
     );
   });

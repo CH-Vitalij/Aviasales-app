@@ -21,7 +21,3 @@ export interface TicketsData {
   tickets: Ticket[];
   stop: boolean;
 }
-
-export interface TicketDataProps extends Ticket {
-  stop: boolean;
-}

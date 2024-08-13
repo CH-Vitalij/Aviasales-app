@@ -1,7 +1,7 @@
 import classes from "./Ticket.module.scss";
 import { addMinutes, format, intervalToDuration, parseISO } from "date-fns";
 
-import { TicketDataProps } from "../../types/aviasalesDataTypes";
+import { type Ticket } from "../../types/aviasalesDataTypes";
 
 const calculateFlightTimes = <T extends { duration: number; date: string }>(segment: T) => {
   const flightDuration = intervalToDuration({ start: 0, end: segment.duration * 60 * 1000 });
@@ -17,7 +17,7 @@ const calculateFlightTimes = <T extends { duration: number; date: string }>(segm
   };
 };
 
-const Ticket = (props: TicketDataProps) => {
+const Ticket = (props: Ticket) => {
   const flights = props.segments.map((segment) => {
     const { departureTime, arrivalTime, flightDuration } = calculateFlightTimes(segment);
 
