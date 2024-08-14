@@ -18,36 +18,36 @@ const fetchDataERROR = (error: string): TicketsAction => ({
   payload: error,
 });
 
-const successiveRequests = async (
-  result: TicketsData,
-  fullRes: TicketsData,
-  obj: AviasalesService,
-  searchId: string,
-  dispatch: Dispatch<TicketsAction>,
-) => {
-  console.log("successiveRequests");
-  console.log(result);
+// const successiveRequests = async (
+//   result: TicketsData,
+//   fullRes: TicketsData,
+//   obj: AviasalesService,
+//   searchId: string,
+//   dispatch: Dispatch<TicketsAction>,
+// ) => {
+//   console.log("successiveRequests");
+//   console.log(result);
 
-  while (!result.stop) {
-    try {
-      result = await obj.getTickets(searchId);
-      fullRes.tickets.push(...result.tickets);
-      fullRes.stop = result.stop;
-    } catch (err) {
-      if (err instanceof Error) {
-        if (err.message === "500") {
-          continue;
-        } else {
-          throw err;
-        }
-      }
-    }
-  }
+//   while (!result.stop) {
+//     try {
+//       result = await obj.getTickets(searchId);
+//       fullRes.tickets.push(...result.tickets);
+//       fullRes.stop = result.stop;
+//     } catch (err) {
+//       if (err instanceof Error) {
+//         if (err.message === "500") {
+//           continue;
+//         } else {
+//           throw err;
+//         }
+//       }
+//     }
+//   }
 
-  console.log(fullRes);
+//   console.log(fullRes);
 
-  dispatch(fetchDataSuccess(fullRes));
-};
+//   dispatch(fetchDataSuccess(fullRes));
+// };
 
 export const fetchTicketsData = (searchId: string) => {
   const obj = new AviasalesService();
@@ -77,9 +77,9 @@ export const fetchTicketsData = (searchId: string) => {
       console.log(result);
       dispatch(fetchDataSuccess(result));
 
-      if (!result.stop) {
-        await successiveRequests(result, fullRes, obj, searchId, dispatch);
-      }
+      // if (!result.stop) {
+      //   await successiveRequests(result, fullRes, obj, searchId, dispatch);
+      // }
     } catch (err) {
       dispatch(fetchDataERROR("Произошла ошибка при загрузке билетов"));
     }

@@ -1,6 +1,6 @@
 import Filters from "../Filters";
 import SortingOptions from "../SortingOptions";
-import TicketsList from "../Tickets";
+import TicketsList from "../TicketList";
 
 import classes from "./App.module.scss";
 import { useCallback, useEffect, useRef } from "react";
