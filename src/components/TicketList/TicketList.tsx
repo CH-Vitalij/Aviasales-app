@@ -56,7 +56,7 @@ const TicketsList = () => {
 
   console.log("Tickets data:", data.tickets);
 
-  const filterData = handleFilter(data.tickets, checkedFilters) as Ticket[];
+  const filterData = filterTicketsByStops(data.tickets, checkedFilters);
 
   console.log("filterData", filterData);
 
@@ -76,165 +76,27 @@ const TicketsList = () => {
   );
 };
 
-const handleFilter = (tickets: Ticket[], filters: string[]) => {
-  let res;
-
-  switch (filters.length) {
-    case 1: {
-      filters.forEach((filter) => {
-        switch (filter) {
-          case "Без пересадок":
-            res = tickets.filter((ticket) => {
-              if (ticket.segments.some((el) => el.stops.length === 0)) {
-                return ticket;
-              }
-            });
-            break;
-          case "1 пересадка":
-            res = tickets.filter((ticket) => {
-              if (ticket.segments.some((el) => el.stops.length === 1)) {
-                return ticket;
-              }
-            });
-            break;
-          case "2 пересадки":
-            res = tickets.filter((ticket) => {
-              if (ticket.segments.some((el) => el.stops.length === 2)) {
-                return ticket;
-              }
-            });
-            break;
-          case "3 пересадки":
-            res = tickets.filter((ticket) => {
-              if (ticket.segments.some((el) => el.stops.length === 3)) {
-                return ticket;
-              }
-            });
-            break;
-
-          default:
-            break;
-        }
-      });
-
-      return res;
-    }
-    case 2:
-      {
-        if (filters[0] === "Без пересадок" && filters[1] === "1 пересадка") {
-          return tickets.filter((ticket) => {
-            if (ticket.segments.some((el) => el.stops.length === 0 || el.stops.length === 1)) {
-              return ticket;
-            }
-          });
-        }
-        if (filters[0] === "Без пересадок" && filters[1] === "2 пересадки") {
-          return tickets.filter((ticket) => {
-            if (ticket.segments.some((el) => el.stops.length === 0 || el.stops.length === 2)) {
-              return ticket;
-            }
-          });
-        }
-        if (filters[0] === "Без пересадок" && filters[1] === "3 пересадки") {
-          return tickets.filter((ticket) => {
-            if (ticket.segments.some((el) => el.stops.length === 0 || el.stops.length === 3)) {
-              return ticket;
-            }
-          });
-        }
-        if (filters[0] === "1 пересадка" && filters[1] === "2 пересадки") {
-          return tickets.filter((ticket) => {
-            if (ticket.segments.some((el) => el.stops.length === 1 || el.stops.length === 2)) {
-              return ticket;
-            }
-          });
-        }
-        if (filters[0] === "1 пересадка" && filters[1] === "3 пересадки") {
-          return tickets.filter((ticket) => {
-            if (ticket.segments.some((el) => el.stops.length === 1 || el.stops.length === 3)) {
-              return ticket;
-            }
-          });
-        }
-        if (filters[0] === "2 пересадки" && filters[1] === "3 пересадки") {
-          return tickets.filter((ticket) => {
-            if (ticket.segments.some((el) => el.stops.length === 2 || el.stops.length === 3)) {
-              return ticket;
-            }
-          });
-        }
-      }
-      break;
-    case 3:
-      {
-        if (
-          filters[0] === "Без пересадок" &&
-          filters[1] === "1 пересадка" &&
-          filters[2] === "2 пересадки"
-        ) {
-          return tickets.filter((ticket) => {
-            if (
-              ticket.segments.some(
-                (el) => el.stops.length === 0 || el.stops.length === 1 || el.stops.length === 2,
-              )
-            ) {
-              return ticket;
-            }
-          });
-        }
-        if (
-          filters[0] === "Без пересадок" &&
-          filters[1] === "1 пересадка" &&
-          filters[2] === "3 пересадки"
-        ) {
-          return tickets.filter((ticket) => {
-            if (
-              ticket.segments.some(
-                (el) => el.stops.length === 0 || el.stops.length === 1 || el.stops.length === 3,
-              )
-            ) {
-              return ticket;
-            }
-          });
-        }
-        if (
-          filters[0] === "Без пересадок" &&
-          filters[1] === "2 пересадки" &&
-          filters[2] === "3 пересадки"
-        ) {
-          return tickets.filter((ticket) => {
-            if (
-              ticket.segments.some(
-                (el) => el.stops.length === 0 || el.stops.length === 2 || el.stops.length === 3,
-              )
-            ) {
-              return ticket;
-            }
-          });
-        }
-        if (
-          filters[0] === "1 пересадка" &&
-          filters[1] === "2 пересадки" &&
-          filters[2] === "3 пересадки"
-        ) {
-          return tickets.filter((ticket) => {
-            if (
-              ticket.segments.some(
-                (el) => el.stops.length === 1 || el.stops.length === 2 || el.stops.length === 3,
-              )
-            ) {
-              return ticket;
-            }
-          });
-        }
-      }
-      break;
-    case 4:
-      return tickets;
-
-    default:
-      return tickets;
+const filterTicketsByStops = (tickets: Ticket[], filters: string[]) => {
+  if (filters.length === 4) {
+    return tickets;
   }
+
+  const stopsNumber = parseStops(filters);
+  return tickets.filter((ticket) =>
+    ticket.segments.some((segment) => stopsNumber.includes(segment.stops.length)),
+  );
+};
+
+const parseStops = (arr: string[]) => {
+  return arr.map((item) => {
+    if (item === "Без пересадок") {
+      return 0;
+    } else if (item.includes("пересадка")) {
+      return parseInt(item.split(" ")[0], 10);
+    } else if (item.includes("пересадки")) {
+      return parseInt(item.split(" ")[0], 10);
+    }
+  });
 };
 
 export default TicketsList;
