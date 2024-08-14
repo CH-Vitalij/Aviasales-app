@@ -2,6 +2,8 @@ import { Ticket } from "../../types/aviasalesDataTypes";
 import parseStops from "../parseStops/parseStops";
 
 const filterTicketsByStops = (tickets: Ticket[], filters: string[]) => {
+  console.log("filterTicketsByStops");
+
   if (filters.length === 4) {
     return tickets;
   }

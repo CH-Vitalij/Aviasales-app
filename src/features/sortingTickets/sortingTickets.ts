@@ -1,19 +1,23 @@
 import { Ticket } from "../../types/aviasalesDataTypes";
 
 const sortingTickets = (tickets: Ticket[], sorting: string) => {
-  if (sorting === "price") {
-    return tickets.sort((ticket1, ticket2) => ticket1.price - ticket2.price);
-  }
+  const ticketsClone = structuredClone(tickets);
 
-  if (sorting === "duration") {
-    return tickets.sort(
-      (ticket1, ticket2) =>
-        ticket1.segments.reduce((sum, el) => (sum += el.duration), 0) -
-        ticket2.segments.reduce((sum, el) => (sum += el.duration), 0),
-    );
-  }
+  switch (sorting) {
+    case "price": {
+      return ticketsClone.sort((ticket1, ticket2) => ticket1.price - ticket2.price);
+    }
+    case "duration": {
+      return ticketsClone.sort(
+        (ticket1, ticket2) =>
+          ticket1.segments.reduce((sum, el) => (sum += el.duration), 0) -
+          ticket2.segments.reduce((sum, el) => (sum += el.duration), 0),
+      );
+    }
 
-  return tickets;
+    default:
+      return ticketsClone;
+  }
 };
 
 export default sortingTickets;

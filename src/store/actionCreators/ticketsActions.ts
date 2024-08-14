@@ -4,10 +4,6 @@ import { TicketsData } from "../../types/aviasalesDataTypes";
 
 import AviasalesService from "../../service/aviasales-service";
 
-// const fetchDataRequest = (): TicketsAction => ({
-//   type: TicketsActionType.FETCH_TICKETS_REQUEST,
-// });
-
 const fetchDataSuccess = (data: TicketsData): TicketsAction => ({
   type: TicketsActionType.FETCH_TICKETS_SUCCESS,
   payload: data,
@@ -26,13 +22,23 @@ const successiveRequests = async (
   dispatch: Dispatch<TicketsAction>,
 ) => {
   console.log("successiveRequests");
-  console.log(result);
+
+  // let totalTickets = 500;
+  // let currentTotalTickets = 0;
 
   while (!result.stop) {
     try {
       result = await obj.getTickets(searchId);
       fullRes.tickets.push(...result.tickets);
       fullRes.stop = result.stop;
+
+      // currentTotalTickets = result.tickets.length;
+      // console.log("currentTotalTickets", currentTotalTickets);
+      // totalTickets += result.tickets.length;
+      // console.log("totalTickets", totalTickets);
+
+      // const progress = Math.round((totalTickets / (totalTickets + currentTotalTickets)) * 100);
+      // console.log(`progress ${progress}%`);
     } catch (err) {
       if (err instanceof Error) {
         if (err.message === "500") {
@@ -57,8 +63,6 @@ export const fetchTicketsData = (searchId: string) => {
 
   return async (dispatch: Dispatch<TicketsAction>) => {
     try {
-      // dispatch(fetchDataRequest());
-
       try {
         result = await obj.getTickets(searchId);
 
@@ -77,9 +81,9 @@ export const fetchTicketsData = (searchId: string) => {
       console.log(result);
       dispatch(fetchDataSuccess(result));
 
-      if (!result.stop) {
-        await successiveRequests(result, fullRes, obj, searchId, dispatch);
-      }
+      // if (!result.stop) {
+      //   await successiveRequests(result, fullRes, obj, searchId, dispatch);
+      // }
     } catch (err) {
       dispatch(fetchDataERROR("Произошла ошибка при загрузке билетов"));
     }
