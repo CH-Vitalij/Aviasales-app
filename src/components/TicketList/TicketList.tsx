@@ -5,12 +5,14 @@ import { Flex, Spin } from "antd";
 
 import classes from "./TicketList.module.scss";
 import TicketItem from "../TicketItem";
-import { Ticket } from "../../types/aviasalesDataTypes";
+import filterTicketsByStops from "../../features/filterTicketsByStops/filterTicketsByStops";
+import sortingTickets from "../../features/sortingTickets/sortingTickets";
 
 const TicketsList = () => {
   const { data, error, loading } = useAppSelector((state) => state.ticketsData);
   const { checkedFilters } = useAppSelector((state) => state.filter);
   const { searchId } = useAppSelector((state) => state.searchId);
+  const { sortingBy } = useAppSelector((state) => state.sortingData);
 
   const { fetchTicketsData } = useTickets();
 
@@ -30,8 +32,6 @@ const TicketsList = () => {
     }
   }, [fetchTickets, searchId]);
 
-  console.log("checkedFilters", checkedFilters);
-
   if (loading) {
     return (
       <Flex justify="center" flex="0 1 502px">
@@ -41,62 +41,39 @@ const TicketsList = () => {
   }
 
   if (error) {
-    return <h1>{error}</h1>;
+    return <h2>{error}</h2>;
   }
 
   if (!data || !("tickets" in data)) {
-    return <h1>Данные не загружены</h1>;
+    return <h2>Данные не загружены</h2>;
   }
 
   if (checkedFilters.length === 0 || data.tickets.length === 0) {
-    return <h1>Рейсов, подходящих под заданные фильтры, не найдено</h1>;
-  }
+    return <h2>Рейсов, подходящих под заданные фильтры, не найдено</h2>;
+  } else {
+    let filterData = filterTicketsByStops(data.tickets, checkedFilters);
 
-  // const hasData = !(loading || error);
+    if (sortingBy) {
+      console.log("sortingBy", sortingBy);
 
-  console.log("Tickets data:", data.tickets);
-
-  const filterData = filterTicketsByStops(data.tickets, checkedFilters);
-
-  console.log("filterData", filterData);
-
-  const ticketItems = filterData.slice(0, 5).map((ticket) => {
-    return (
-      <li key={ticket.id} className={classes.ticketsTicket}>
-        <TicketItem {...ticket} />
-      </li>
-    );
-  });
-
-  return (
-    <>
-      {!data.stop ? <h1>Ищем билеты...</h1> : null}
-      <ul className={`${classes.aviasalesAppTickets} ${classes.tickets}`}>{ticketItems}</ul>
-    </>
-  );
-};
-
-const filterTicketsByStops = (tickets: Ticket[], filters: string[]) => {
-  if (filters.length === 4) {
-    return tickets;
-  }
-
-  const stopsNumber = parseStops(filters);
-  return tickets.filter((ticket) =>
-    ticket.segments.some((segment) => stopsNumber.includes(segment.stops.length)),
-  );
-};
-
-const parseStops = (arr: string[]) => {
-  return arr.map((item) => {
-    if (item === "Без пересадок") {
-      return 0;
-    } else if (item.includes("пересадка")) {
-      return parseInt(item.split(" ")[0], 10);
-    } else if (item.includes("пересадки")) {
-      return parseInt(item.split(" ")[0], 10);
+      filterData = sortingTickets(filterData, sortingBy);
     }
-  });
+
+    const ticketItems = filterData.slice(0, 5).map((ticket) => {
+      return (
+        <li key={ticket.id} className={classes.ticketsTicket}>
+          <TicketItem {...ticket} />
+        </li>
+      );
+    });
+
+    return (
+      <>
+        {!data.stop ? <h1>Ищем билеты...</h1> : null}
+        <ul className={`${classes.aviasalesAppTickets} ${classes.tickets}`}>{ticketItems}</ul>
+      </>
+    );
+  }
 };
 
 export default TicketsList;

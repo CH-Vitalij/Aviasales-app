@@ -11,7 +11,8 @@
   text-align: left;
   vertical-align: middle;
   color: #4a4a4a;
-  cursor: url("../../img/Cursor.png") 5 0, pointer;
+  cursor: url("../../assets/img/Cursor.png") 5 0, pointer;
+  -webkit-user-select: none;
   user-select: none;
   transition: background-color 0.3s;
   padding-left: 20px;
@@ -25,7 +26,7 @@
   }
 
   .ant-checkbox-input {
-    cursor: url("../../img/Cursor.png") 5 0, pointer;
+    cursor: url("../../assets/img/Cursor.png") 5 0, pointer;
   }
 
   .ant-checkbox-inner {

@@ -7,7 +7,7 @@ import { reducerSearchId } from "./reducerSearchId";
 export const rootReducer = combineReducers({
   ticketsData: reducerTicketsData,
   filter: reducerFilter,
-  data: reducerSorting,
+  sortingData: reducerSorting,
   searchId: reducerSearchId,
 });
 

@@ -1,11 +1,20 @@
 export interface SortingState {
-  data: string[];
+  sortingBy: string;
 }
 
 export enum SortingActionType {
-  VALUE = "VALUE",
+  SORTING_PRICE = "SORTING_PRICE",
+  SORTING_DURATION = "SORTING_DURATION",
 }
 
-export interface SortingAction {
+interface SortingPriceAction {
   type: SortingActionType;
+  payload: string;
 }
+
+interface SortingDurationAction {
+  type: SortingActionType;
+  payload: string;
+}
+
+export type SortingAction = SortingPriceAction | SortingDurationAction;

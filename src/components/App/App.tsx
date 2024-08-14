@@ -20,13 +20,9 @@ const App = () => {
   const ignore = useRef(false);
 
   useEffect(() => {
-    console.log("Effect S");
-
     fetchSearchId(ignore.current);
 
     return () => {
-      console.log('clean S');
-      
       ignore.current = true;
     };
   }, [fetchSearchId]);
@@ -47,7 +43,7 @@ const App = () => {
     <section className={`${classes.pageAviasalesApp} ${classes.aviasalesApp}`}>
       <div className={classes.aviasalesAppBody}>
         <div className={classes.aviasalesAppLogo}>
-          <img src="./src/img/Logo.svg" alt="aviasales-logo" />
+          <img src="/src/assets/img/Logo.svg" alt="aviasales-logo" />
         </div>
         <div className={classes.aviasalesAppContainer1}>
           <Filters />

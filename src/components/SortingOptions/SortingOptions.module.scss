@@ -24,9 +24,10 @@
     background-color: #ffffff;
     padding: 15px;
     width: 167.3333333px;
+    -webkit-user-select: none;
     user-select: none;
     height: 50px;
-    cursor: url("../../img/Cursor.png") 5 0, pointer;
+    cursor: url("../../assets/img/Cursor.png") 5 0, pointer;
 
     &_active {
       background-color: #2196f3;
