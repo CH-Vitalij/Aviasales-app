@@ -1,4 +1,16 @@
 .aviasales-app {
+  &__progress-bar {
+    width: inherit;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    vertical-align: middle;
+    color: #4a4a4a;
+  }
+
   &__tickets {
     margin: 0;
     padding: 0;

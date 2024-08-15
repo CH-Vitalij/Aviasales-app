@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useTickets } from "../../hooks/useTickets";
+import { Progress } from "antd";
 
 import classes from "./TicketList.module.scss";
 import TicketItem from "../TicketItem";
@@ -12,6 +13,7 @@ const TicketsList = () => {
   const { checkedFilters } = useAppSelector((state) => state.filter);
   const { searchId } = useAppSelector((state) => state.searchId);
   const { sortingBy } = useAppSelector((state) => state.sortingData);
+  const { progress } = useAppSelector((state) => state.progressBar);
 
   const { fetchTicketsData } = useTickets();
 
@@ -41,10 +43,6 @@ const TicketsList = () => {
     return <h2>{error}</h2>;
   }
 
-  // if (!data || !("tickets" in data)) {
-  //   return <h2>Данные не загружены</h2>;
-  // }
-
   if (checkedFilters.length === 0 || filterData.length === 0) {
     return <h2>Рейсов, подходящих под заданные фильтры, не найдено</h2>;
   }
@@ -63,7 +61,12 @@ const TicketsList = () => {
 
   return (
     <>
-      {data && "stop" in data && !data.stop ? <h1>Ищем билеты...</h1> : null}
+      {data && "stop" in data && !data.stop ? (
+        <div className={`${classes.aviasalesAppProgressBar}`}>
+          Ищем авиабилеты
+          <Progress percent={progress} size="small" />
+        </div>
+      ) : null}
       <ul className={`${classes.aviasalesAppTickets} ${classes.tickets}`}>{ticketItems}</ul>
     </>
   );

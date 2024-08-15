@@ -3,6 +3,8 @@ import { TicketsAction, TicketsActionType } from "../../types/ticketsDataTypes";
 import { TicketsData } from "../../types/aviasalesDataTypes";
 
 import AviasalesService from "../../service/aviasales-service";
+import { progressBarActions } from "./progressBarActions";
+import { ProgressBarAction } from "../../types/progressBartTypes";
 
 const fetchDataSuccess = (data: TicketsData): TicketsAction => ({
   type: TicketsActionType.FETCH_TICKETS_SUCCESS,
@@ -19,12 +21,9 @@ const successiveRequests = async (
   fullRes: TicketsData,
   obj: AviasalesService,
   searchId: string,
-  dispatch: Dispatch<TicketsAction>,
+  dispatch: Dispatch<TicketsAction | ProgressBarAction>,
 ) => {
   console.log("successiveRequests");
-
-  // let totalTickets = 500;
-  // let currentTotalTickets = 0;
 
   while (!result.stop) {
     try {
@@ -32,13 +31,7 @@ const successiveRequests = async (
       fullRes.tickets.push(...result.tickets);
       fullRes.stop = result.stop;
 
-      // currentTotalTickets = result.tickets.length;
-      // console.log("currentTotalTickets", currentTotalTickets);
-      // totalTickets += result.tickets.length;
-      // console.log("totalTickets", totalTickets);
-
-      // const progress = Math.round((totalTickets / (totalTickets + currentTotalTickets)) * 100);
-      // console.log(`progress ${progress}%`);
+      dispatch(progressBarActions());
     } catch (err) {
       if (err instanceof Error) {
         if (err.message === "500") {
@@ -61,7 +54,7 @@ export const fetchTicketsData = (searchId: string) => {
   const fullRes: TicketsData = { tickets: [], stop: false };
   let result: TicketsData = { tickets: [], stop: false };
 
-  return async (dispatch: Dispatch<TicketsAction>) => {
+  return async (dispatch: Dispatch<TicketsAction | ProgressBarAction>) => {
     try {
       try {
         result = await obj.getTickets(searchId);
@@ -79,11 +72,12 @@ export const fetchTicketsData = (searchId: string) => {
       }
 
       console.log(result);
+      dispatch(progressBarActions());
       dispatch(fetchDataSuccess(result));
 
-      // if (!result.stop) {
-      //   await successiveRequests(result, fullRes, obj, searchId, dispatch);
-      // }
+      if (!result.stop) {
+        await successiveRequests(result, fullRes, obj, searchId, dispatch);
+      }
     } catch (err) {
       dispatch(fetchDataERROR("Произошла ошибка при загрузке билетов"));
     }
