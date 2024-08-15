@@ -8,6 +8,8 @@ import { useSearchId } from "../../hooks/useSearchId";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { Flex, Spin } from "antd";
 
+import logo from "../../assets/img/Logo.svg";
+
 const App = () => {
   const { loading, error } = useAppSelector((state) => state.searchId);
   const { checkedFilters } = useAppSelector((state) => state.filter);
@@ -44,7 +46,7 @@ const App = () => {
     <section className={`${classes.pageAviasalesApp} ${classes.aviasalesApp}`}>
       <div className={classes.aviasalesAppBody}>
         <div className={classes.aviasalesAppLogo}>
-          <img src="/src/assets/img/Logo.svg" alt="aviasales-logo" />
+          <img src={logo} alt="aviasales-logo" />
         </div>
         <div className={classes.aviasalesAppContainer1}>
           <Filters />
