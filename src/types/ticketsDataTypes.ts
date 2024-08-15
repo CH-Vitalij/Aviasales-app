@@ -1,7 +1,6 @@
 import { TicketsData } from "./aviasalesDataTypes";
 
 export interface TicketsState {
-  loading: boolean;
   data: TicketsData;
   error: null | string;
 }

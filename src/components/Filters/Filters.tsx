@@ -1,11 +1,10 @@
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { filterAction } from "../../store/actionCreators/filterAction";
 import classes from "./Filters.module.scss";
 import "./FilterAnt.scss";
 
 import { Checkbox } from "antd";
 import type { CheckboxProps } from "antd";
+import { useFilter } from "../../hooks/useFilter";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -13,16 +12,16 @@ const Filters: React.FC = () => {
   const filters = ["Без пересадок", "1 пересадка", "2 пересадки", "3 пересадки"];
   const { checkedFilters } = useAppSelector((state) => state.filter);
 
-  const dispatch = useAppDispatch();
+  const { filterAction } = useFilter();
 
   const checkAll = filters.length === checkedFilters.length;
 
   const onChange = (list: string[]) => {
-    dispatch(filterAction(list));
+    filterAction(list);
   };
 
   const onCheckAllChange: CheckboxProps["onChange"] = (e) => {
-    dispatch(filterAction(e.target.checked ? filters : []));
+    filterAction(e.target.checked ? filters : []);
   };
 
   return (

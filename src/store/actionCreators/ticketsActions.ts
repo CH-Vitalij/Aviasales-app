@@ -18,12 +18,11 @@ const fetchDataERROR = (error: string): TicketsAction => ({
 
 const successiveRequests = async (
   result: TicketsData,
-  fullRes: TicketsData,
   obj: AviasalesService,
   searchId: string,
   dispatch: Dispatch<TicketsAction | ProgressBarAction>,
 ) => {
-  console.log("successiveRequests");
+  const fullRes: TicketsData = { tickets: [], stop: false };
 
   while (!result.stop) {
     try {
@@ -43,40 +42,37 @@ const successiveRequests = async (
     }
   }
 
-  console.log(fullRes);
-
   dispatch(fetchDataSuccess(fullRes));
 };
 
 export const fetchTicketsData = (searchId: string) => {
   const obj = new AviasalesService();
 
-  const fullRes: TicketsData = { tickets: [], stop: false };
   let result: TicketsData = { tickets: [], stop: false };
 
   return async (dispatch: Dispatch<TicketsAction | ProgressBarAction>) => {
     try {
-      try {
-        result = await obj.getTickets(searchId);
-
-        fullRes.tickets.push(...result.tickets);
-      } catch (err) {
-        if (err instanceof Error) {
-          if (err.message === "500") {
-            result = await obj.getTickets(searchId);
-            fullRes.tickets.push(...result.tickets);
-          } else {
-            throw err;
+      // eslint-disable-next-line no-constant-condition
+      while (true) {
+        try {
+          result = await obj.getTickets(searchId);
+          break;
+        } catch (err) {
+          if (err instanceof Error) {
+            if (err.message === "500") {
+              continue;
+            } else {
+              throw err;
+            }
           }
         }
       }
 
-      console.log(result);
       dispatch(progressBarActions());
       dispatch(fetchDataSuccess(result));
 
       if (!result.stop) {
-        await successiveRequests(result, fullRes, obj, searchId, dispatch);
+        await successiveRequests(result, obj, searchId, dispatch);
       }
     } catch (err) {
       dispatch(fetchDataERROR("Произошла ошибка при загрузке билетов"));

@@ -62,7 +62,12 @@ const TicketItem = (props: Ticket) => {
           {new Intl.NumberFormat("ru").format(props.price)} Р
         </span>
         <div className={classes.ticketsTicketHeaderArlineLogo}>
-          <img src={`http://pics.avs.io/110/36/${props.carrier}.png.`} alt="arline-logo" />
+          <img
+            src={`http://pics.avs.io/110/36/${props.carrier}.png.`}
+            width={110}
+            height={36}
+            alt="arline-logo"
+          />
         </div>
       </header>
       {flights}

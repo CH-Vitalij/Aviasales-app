@@ -10,6 +10,7 @@ import { Flex, Spin } from "antd";
 
 const App = () => {
   const { loading, error } = useAppSelector((state) => state.searchId);
+  const { checkedFilters } = useAppSelector((state) => state.filter);
   const { fetchSearchIdData } = useSearchId();
 
   const fetchSearchId = useCallback(
@@ -36,7 +37,7 @@ const App = () => {
   }
 
   if (error) {
-    return <h1>{error}</h1>;
+    return <h2>{error}</h2>;
   }
 
   return (
@@ -50,7 +51,9 @@ const App = () => {
           <div className={classes.aviasalesAppContainer2}>
             <SortingOptions />
             <TicketsList />
-            <button className={classes.aviasalesAppBtn}>ПОКАЗАТЬ ЕЩЁ 5 БИЛЕТОВ!</button>
+            {checkedFilters.length ? (
+              <button className={classes.aviasalesAppBtn}>ПОКАЗАТЬ ЕЩЁ 5 БИЛЕТОВ!</button>
+            ) : null}
           </div>
         </div>
       </div>

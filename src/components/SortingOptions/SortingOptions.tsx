@@ -1,39 +1,32 @@
-import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
+import { useSorting } from "../../hooks/useSorting";
 
 import classes from "./SortingOptions.module.scss";
 
 const SortingOptions = () => {
-  const { sortingBy } = useAppSelector((state) => state.sortingData);
-  const dispatch = useAppDispatch();
+  const { dataSorting } = useAppSelector((state) => state.sortingData);
+  const { sortingAction } = useSorting();
 
   const classActive = `${classes.sortingOptionsItemActive}`;
 
-  return (
-    <ul className={`${classes.aviasalesAppSortingOptions} ${classes.sortingOptions}`}>
-      <li>
+  const elements = dataSorting.map((el) => {
+    return (
+      <li key={el.id}>
         <button
           className={`${classes.sortingOptionsItem} ${classes.sortingOptionsItemLeft} ${
-            sortingBy === "price" ? classActive : ""
+            el.active ? classActive : ""
           }`}
-          onClick={() => dispatch({ type: "SORTING_PRICE", payload: "price" })}
+          onClick={() => sortingAction(el.sortingBy, el.id)}
         >
-          САМЫЙ ДЕШЕВЫЙ
+          {el.sortingBy}
         </button>
       </li>
-      <li>
-        <button
-          className={`${classes.sortingOptionsItem} ${sortingBy === "duration" ? classActive : ""}`}
-          onClick={() => dispatch({ type: "SORTING_DURATION", payload: "duration" })}
-        >
-          САМЫЙ БЫСТРЫЙ
-        </button>
-      </li>
-      <li>
-        <button className={`${classes.sortingOptionsItem} ${classes.sortingOptionsItemRight}`}>
-          ОПТИМАЛЬНЫЙ
-        </button>
-      </li>
+    );
+  });
+
+  return (
+    <ul className={`${classes.aviasalesAppSortingOptions} ${classes.sortingOptions}`}>
+      {elements}
     </ul>
   );
 };
