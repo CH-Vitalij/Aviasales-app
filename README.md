@@ -4,7 +4,7 @@
 
 ## Деплой
 
-Проект развернут и доступен по ссылке: [Перейти к проекту](https://aviasales-app-gilt.vercel.app)
+Проект развернут и доступен по ссылке: [Перейти к проекту](https://aviasales-app-nu-two.vercel.app)
 
 # React + TypeScript + Vite
 
